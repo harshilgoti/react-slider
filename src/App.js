@@ -8,6 +8,8 @@ import { increment,decrement,reset,fetchUser } from './store/action'
 
 function App(props) {
 
+
+
   useEffect(()=>{
     props.fetchUser()
   },[]) // eslint-disable-line
@@ -31,19 +33,18 @@ function App(props) {
   return (
     <div >
       <h4 style={{display:"flex",justifyContent:"center"}}>React Awesome Redux</h4>
-      <p>{name}</p>
-      <p>{surName}</p>
+      <p>{name}  {surName}</p>
+    
       <p>{age}</p>
       <p>{count}</p>
-      <button onClick={() => handleClickIncrement()}>+</button>
-      <button onClick={() => handleClickDecrement()}>-</button>
-      <button onClick={() => reset()}>0</button>
+      <button onClick={() => handleClickIncrement()}> + </button>
+      <button onClick={() => handleClickDecrement()}> - </button>
+      <button onClick={() => reset()}> 0 </button>
     </div>
   );
 }
 
 function mapStateToProps (state)  {
-  console.log("state",state)
   const { counter } = state.counter
   const { userData } = state.user
   return {
