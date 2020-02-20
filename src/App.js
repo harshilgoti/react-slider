@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import { increment,decrement,reset } from './store/action'
+import { increment,decrement,reset,fetchUser } from './store/action'
 
 
  
 
 function App(props) {
+
+  useEffect(()=>{
+    props.fetchUser()
+  },[]) // eslint-disable-line
  
   function handleClickIncrement(){
     props.increment()
@@ -20,10 +24,17 @@ function App(props) {
     props.reset()
   }
 
+  const count = props.counters
+  const {name,surName,age} = props.user
+
+
   return (
     <div >
       <h4 style={{display:"flex",justifyContent:"center"}}>React Awesome Redux</h4>
-      <p>{props.counters}</p>
+      <p>{name}</p>
+      <p>{surName}</p>
+      <p>{age}</p>
+      <p>{count}</p>
       <button onClick={() => handleClickIncrement()}>+</button>
       <button onClick={() => handleClickDecrement()}>-</button>
       <button onClick={() => reset()}>0</button>
@@ -32,12 +43,16 @@ function App(props) {
 }
 
 function mapStateToProps (state)  {
+  console.log("state",state)
+  const { counter } = state.counter
+  const { userData } = state.user
   return {
-    counters: state.user.counter
+    counters: counter,
+    user:userData
   }
 }
 
 export default connect(
   mapStateToProps,
-  {increment,decrement,reset}
+  {increment,decrement,reset,fetchUser}
 )(App);
